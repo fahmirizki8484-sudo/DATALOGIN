@@ -1,0 +1,1554 @@
+
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>DATALOGIN FAHMI!</title>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&family=Orbitron:wght@500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<style>
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+ --navy:#020b1d;--panel:#061b36;--blue:#006dff;--electric:#00aaff;
+ --cyan:#00d9ff;--yellow:#ffd400;--text:#f5faff;--muted:#7695b9;
+ --green:#20e58b;--red:#ff4e69
+}
+html,body{width:100%;height:100%;overflow:hidden}
+body{
+ font-family:Inter,sans-serif;color:var(--text);position:relative;
+ background:
+ radial-gradient(ellipse 700px 420px at 50% -8%,rgba(0,123,255,.2),transparent 70%),
+ radial-gradient(ellipse 500px 500px at -8% 35%,rgba(0,174,255,.1),transparent 70%),
+ radial-gradient(ellipse 600px 500px at 108% 75%,rgba(0,83,255,.09),transparent 70%),
+ radial-gradient(ellipse 500px 300px at 50% 105%,rgba(0,119,255,.07),transparent 70%),
+ linear-gradient(145deg,#010817,#03152f 45%,#020c20)
+}
+body:before{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+ background:
+ linear-gradient(rgba(0,174,255,.025) 1px,transparent 1px),
+ linear-gradient(90deg,rgba(0,174,255,.025) 1px,transparent 1px);
+ background-size:46px 46px;
+ mask-image:radial-gradient(ellipse at center,#000 20%,transparent 82%)
+}
+body:after{
+ content:"";position:fixed;inset:0;pointer-events:none;z-index:-1;
+ background:radial-gradient(circle at 50% 40%,transparent 35%,rgba(0,0,0,.28))
+}
+
+/* HEADER */
+header{
+ height:76px;position:fixed;inset:0 0 auto;z-index:100;
+ display:flex;align-items:center;justify-content:space-between;padding:0 30px;
+ background:rgba(2,10,28,.88);border-bottom:1px solid rgba(0,176,255,.25);
+ backdrop-filter:blur(20px);
+ box-shadow:0 8px 35px rgba(0,0,0,.28),inset 0 -1px rgba(0,180,255,.04)
+}
+.brand,.header-right,.platform,.content-title,.handover-title{
+ display:flex;align-items:center
+}
+.brand{gap:13px}
+.brand-logo{
+ width:45px;height:45px;display:grid;place-items:center;border-radius:13px;
+ background:linear-gradient(145deg,#006eff,#00bfff);
+ border:1px solid #5be8ff;
+ box-shadow:0 0 15px rgba(0,177,255,.65),inset 0 0 18px rgba(255,255,255,.15)
+}
+.brand-logo i{font-size:19px}
+.brand-title{
+ font-size:25px;font-weight:900;letter-spacing:.04em;
+ text-shadow:0 0 12px rgba(0,190,255,.5)
+}
+.brand-sub{
+ margin-top:3px;color:#78b2dd;font-size:8px;font-weight:700;letter-spacing:.18em
+}
+.header-right{gap:18px}
+.clock{text-align:right}
+.clock strong{display:block;font-size:15px;letter-spacing:.06em}
+.clock span{display:block;color:#6686ac;font-size:10px;margin-top:4px}
+
+/* LAYOUT */
+.container{
+ position:fixed;inset:76px 0 0;padding:18px 20px 20px;overflow:hidden
+}
+
+.layout{
+  width:100%;
+  max-width:none;
+  height:100%;
+  margin:0;
+  display:grid;
+  grid-template-columns:360px minmax(0,1fr);
+  gap:14px;
+  min-height:0;
+  box-sizing:border-box;
+}
+
+
+/* SIDEBAR */
+.sidebar{
+ height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden
+}
+.side{
+ border:1px solid rgba(8,117,182,.85);border-radius:19px;overflow:hidden;
+ background:linear-gradient(145deg,rgba(3,30,63,.94),rgba(2,13,30,.96));
+ box-shadow:0 15px 45px rgba(0,0,0,.3),0 0 25px rgba(0,104,255,.035),
+ inset 0 0 25px rgba(0,126,255,.04);
+ margin-bottom:14px;flex:none
+}
+.sidebar .side:last-child{
+ flex:1;min-height:0;display:flex;flex-direction:column;margin:0
+}
+.side-title{
+ padding:17px 17px 12px;color:var(--yellow);
+ font-size:10px;font-weight:800;letter-spacing:.12em
+}
+.side-title span{
+ display:block;color:#557da6;font-size:10px;letter-spacing:0;
+ margin-top:5px;font-weight:500
+}
+.side-body{padding:0 13px 14px}
+.sidebar .side:last-child .side-body{
+ min-height:0;display:flex;flex-direction:column
+}
+.side-label{
+ margin:17px 2px 8px;color:#ffd400;
+ font-size:8px;font-weight:900;letter-spacing:.16em
+}
+.search{position:relative;margin-bottom:10px}
+.search i{
+ position:absolute;left:13px;top:50%;transform:translateY(-50%);
+ color:#48caff;font-size:10px
+}
+.search input{
+ width:100%;height:39px;border:1px solid #0b659e;border-radius:10px;
+ outline:0;padding:0 10px 0 34px;background:#031126;color:#fff;font-size:9px
+}
+.search input:focus{
+ border-color:#00bfff;box-shadow:0 0 12px rgba(0,174,255,.13)
+}
+.side-btn{
+ width:100%;height:40px;margin-top:8px;border:1px solid #0582ca;
+ border-radius:10px;background:linear-gradient(135deg,#075fc5,#00a9ee);
+ color:#fff;font-size:9px;font-weight:800;cursor:pointer;
+ box-shadow:inset 0 0 12px rgba(255,255,255,.08),0 5px 14px rgba(0,106,255,.15);
+ transition:.2s
+}
+.side-btn:hover{
+ transform:translateY(-2px);box-shadow:0 7px 20px rgba(0,153,255,.3)
+}
+.side-btn.yellow{
+ color:#142039;border-color:#ffe84a;
+ background:linear-gradient(135deg,#ffc900,#ffe94d);
+ box-shadow:0 5px 18px rgba(255,211,0,.2)
+}
+.side-btn.dark{background:linear-gradient(135deg,#074184,#0877b5)}
+.link-list{
+ display:flex;flex-direction:column;gap:7px;min-height:0;overflow:auto;
+ padding-right:3px;padding-bottom:2px
+}
+.link-list::-webkit-scrollbar,.cards::-webkit-scrollbar{width:6px}
+.link-list::-webkit-scrollbar-track,.cards::-webkit-scrollbar-track{
+ background:rgba(0,20,45,.55);border-radius:10px
+}
+.link-list::-webkit-scrollbar-thumb,.cards::-webkit-scrollbar-thumb{
+ background:linear-gradient(#007cff,#00bfff);border-radius:10px
+}
+.quick-link{
+ display:flex;align-items:center;gap:9px;min-height:40px;padding:7px 8px;
+ border:1px solid #0a4775;border-radius:9px;background:rgba(0,91,170,.08);
+ transition:.2s;flex:none
+}
+.quick-link:hover{
+ border-color:#00bfff;background:rgba(0,132,255,.12);transform:translateX(2px)
+}
+.quick-icon{
+ width:27px;height:27px;display:grid;place-items:center;flex:none;
+ border-radius:7px;color:#7fe6ff;background:#07345f;border:1px solid #0b689c;font-size:9px
+}
+.quick-info{min-width:0;flex:1}
+.quick-name{font-size:10px;font-weight:800}
+.quick-url{
+ color:#4e729a;font-size:9px;margin-top:3px;overflow:hidden;
+ text-overflow:ellipsis;white-space:nowrap
+}
+.quick-open,.quick-delete{
+ width:25px;height:25px;display:grid;place-items:center;flex:none;
+ border-radius:6px;font-size:8px
+}
+.quick-open{border:1px solid #14517d;color:#71bde4;text-decoration:none}
+.quick-delete{
+ border:1px solid #653045;background:transparent;color:#d86b82;cursor:pointer
+}
+
+/* CONTENT */
+main{
+ height:100%;min-height:0;display:flex;flex-direction:column;overflow:hidden
+}
+.content-head{
+ display:flex;align-items:center;justify-content:space-between;
+ gap:14px;margin-bottom:12px;flex:none
+}
+.content-title{gap:10px;min-width:0}
+.title-line{
+ width:4px;height:30px;border-radius:5px;
+ background:linear-gradient(#00dfff,#0070ff);box-shadow:0 0 12px #00bfff
+}
+.content-title h3{font-size:12px;font-weight:800;letter-spacing:.04em}
+.content-title p{color:#6184aa;font-size:10px;margin-top:4px}
+
+/* HANDOVER */
+.handover.compact{
+ width:290px;flex:none;border:1px solid #0878b9;border-radius:12px;overflow:hidden;
+ background:linear-gradient(145deg,rgba(3,31,65,.94),rgba(2,13,30,.98));
+ box-shadow:0 10px 25px rgba(0,0,0,.25),inset 0 0 18px rgba(0,120,255,.04)
+}
+.handover-head{
+ display:flex;align-items:center;justify-content:space-between;padding:8px 10px;cursor:pointer
+}
+.handover-title{gap:8px;min-width:0}
+.handover-icon{
+ width:28px;height:28px;display:grid;place-items:center;flex:none;border-radius:7px;
+ color:#fff;background:linear-gradient(135deg,#0768c8,#00aeea);
+ border:1px solid #52dcff;font-size:8px
+}
+.handover-title strong{display:block;color:var(--yellow);font-size:10px;white-space:nowrap}
+.handover-title span{display:block;margin-top:2px;color:#5e82a9;font-size:9px;white-space:nowrap}
+.handover-chevron{color:#62d9ff;font-size:10px;transition:.2s}
+.handover.open .handover-chevron{transform:rotate(180deg)}
+.handover-body{display:none;padding:0 9px 9px}
+.handover.open .handover-body{display:block}
+.handover-output{
+ min-height:100px;max-height:220px;overflow:auto;padding:9px;
+ border:1px solid #0b4e7c;border-radius:8px;background:#020c1c;color:#9bc4e3;
+ font:10px/1.6 monospace;white-space:pre-wrap
+}
+.copy-handover{
+ margin-top:7px;height:27px;padding:0 10px;float:right;border:1px solid #ffe239;
+ border-radius:7px;background:linear-gradient(135deg,#f5c800,#ffe84b);
+ color:#14213b;font-size:10px;font-weight:900;cursor:pointer
+}
+
+/* CARDS */
+.cards{
+ flex:1;
+ min-height:0;
+ width:100%;
+ display:grid;
+ grid-template-columns:repeat(4,minmax(0,1fr));
+ align-content:start;
+ gap:12px;
+ overflow:auto;
+ padding:3px 4px 25px 2px;
+ scrollbar-gutter:stable;
+}
+
+.account{
+ min-height:500px;position:relative;overflow:hidden;border:1px solid rgba(13,126,194,.72);
+ border-radius:20px;background:linear-gradient(145deg,rgba(7,35,69,.98),rgba(2,14,32,.99));
+ box-shadow:0 18px 45px rgba(0,0,0,.32),0 0 0 1px rgba(0,170,255,.025),
+ inset 0 1px rgba(255,255,255,.035),inset 0 0 35px rgba(0,119,255,.055);
+ transition:.22s
+}
+.account:hover{
+ transform:translateY(-4px);border-color:rgba(0,198,255,.95);
+ box-shadow:0 22px 48px rgba(0,0,0,.38),0 0 30px rgba(0,154,255,.12),
+ inset 0 1px rgba(255,255,255,.05)
+}
+.account:before{
+ content:"";position:absolute;left:16px;right:16px;top:0;height:2px;
+ border-radius:0 0 5px 5px;
+ background:linear-gradient(90deg,transparent,#0078ff,#00d9ff,#0078ff,transparent);
+ box-shadow:0 0 13px rgba(0,191,255,.7)
+}
+.account:after{
+ content:"";position:absolute;width:160px;height:160px;right:-100px;bottom:-100px;
+ border-radius:50%;border:1px solid rgba(0,190,255,.12);
+ box-shadow:0 0 0 25px rgba(0,190,255,.018),0 0 0 50px rgba(0,190,255,.012);
+ pointer-events:none
+}
+.account-top{
+ display:flex;align-items:center;justify-content:space-between;padding:16px 15px 13px;
+ border-bottom:1px solid rgba(0,133,208,.18)
+}
+.platform{gap:11px;min-width:0}
+.platform-info{min-width:0}
+.platform-info h4{
+ font-size:14px;font-weight:900;white-space:nowrap;overflow:hidden;text-overflow:ellipsis
+}
+.platform-info span{
+ display:block;color:#4f83ad;margin-top:5px;font-size:7px;font-weight:800;letter-spacing:.16em
+}
+.footer-actions,.cred-buttons{display:flex;gap:4px}
+.credential{
+ margin:6px 11px 0;padding:6px 8px;border:1px solid #0b4772;border-radius:8px;
+ background:rgba(0,22,48,.68)
+}
+.cred-top{display:flex;justify-content:space-between;align-items:center;margin:3px 0 -3px}
+.cred-label{color:#4e779d;font-size:10px;font-weight:900;letter-spacing:.12em}
+.cred-value{
+ color:#eaf6ff;font-family:monospace;font-size:13px;line-height:1.25;word-break:break-all
+}
+.icon-btn{
+ width:27px;height:25px;display:grid;place-items:center;border:1px solid rgba(0,174,255,.28);
+ border-radius:7px;background:linear-gradient(145deg,rgba(10,55,100,.85),rgba(3,25,52,.92));
+ color:#8edfff;cursor:pointer;font-size:13px;
+ box-shadow:inset 0 1px rgba(255,255,255,.05),0 3px 10px rgba(0,0,0,.25);
+ transition:.18s
+}
+.icon-btn:hover{
+ transform:translateY(-1px);border-color:#00b7ff;color:#fff;
+ background:linear-gradient(145deg,rgba(0,123,255,.45),rgba(0,53,100,.9));
+ box-shadow:0 0 12px rgba(0,183,255,.18)
+}
+.icon-btn:active{transform:scale(.94)}
+
+/* NOMOR TABEL DAN PENGATURAN URUTAN */
+.platform-number{
+ width:43px;height:43px;flex:none;display:grid;place-items:center;border-radius:13px;
+ color:#ffd400;font-family:Orbitron,sans-serif;font-size:19px;font-weight:900;
+ background:linear-gradient(145deg,#073b78,#03162f);border:1px solid #00bfff;
+ box-shadow:0 0 16px rgba(0,153,255,.25),inset 0 0 12px rgba(0,191,255,.12)
+}
+.order-control{
+ display:flex;align-items:center;gap:5px;margin:8px 11px 10px;padding:8px;
+ border:1px solid #0b4772;border-radius:9px;background:rgba(0,22,48,.68)
+}
+.order-control label{color:#70a4ce;font-size:9px;font-weight:800;white-space:nowrap}
+.order-control select{
+ flex:1;min-width:0;height:29px;padding:0 7px;color:#fff;background:#03152d;
+ border:1px solid #0878b9;border-radius:6px;outline:none;font-size:10px;cursor:pointer
+}
+.order-control select:focus{border-color:#00d9ff;box-shadow:0 0 8px rgba(0,191,255,.25)}
+.order-control button{
+ height:29px;padding:0 10px;color:#102039;background:linear-gradient(135deg,#ffc900,#ffe94d);
+ border:1px solid #ffe84a;border-radius:6px;font-size:9px;font-weight:900;cursor:pointer
+}
+.order-control button:hover{filter:brightness(1.1)}
+
+/* AUTHENTICATOR */
+.auth-box{
+ margin:8px 11px 12px;padding:10px;border:1px solid rgba(0,183,255,.4);
+ border-radius:10px;background:linear-gradient(145deg,rgba(0,40,75,.8),rgba(0,13,32,.95));
+ position:relative;z-index:1
+}
+.auth-heading{
+ display:flex;align-items:center;justify-content:space-between;gap:6px;margin-bottom:9px
+}
+.auth-heading strong{color:#ffd400;font-size:10px;letter-spacing:.08em}
+.auth-status{color:#6c9bbc;font-size:8px}
+.auth-secret-row{display:flex;gap:5px}
+.auth-secret-input{
+ flex:1;min-width:0;width:100%;height:32px;padding:0 8px;color:#eaf6ff;
+ background:#020b19;border:1px solid #10527e;border-radius:6px;outline:none;
+ font-family:monospace;font-size:10px
+}
+.auth-secret-input:focus{border-color:#00d9ff;box-shadow:0 0 9px rgba(0,191,255,.15)}
+.auth-save-btn,.auth-clear-btn{
+ height:32px;padding:0 8px;border-radius:6px;cursor:pointer;font-size:9px;font-weight:800
+}
+.auth-save-btn{
+ color:#102039;background:linear-gradient(135deg,#ffc900,#ffe94d);border:1px solid #ffe84a
+}
+.auth-clear-btn{color:#ff9bab;background:#291326;border:1px solid #743349}
+.auth-result{
+ margin-top:10px;padding:10px 6px;text-align:center;border:1px solid rgba(0,174,255,.25);
+ border-radius:8px;background:rgba(0,8,23,.8)
+}
+.auth-result-label{color:#6b9fc4;font-size:8px;font-weight:800;letter-spacing:.15em}
+.auth-code{
+ display:block;margin:6px 0;color:#00d9ff;font:900 27px Orbitron,monospace;
+ letter-spacing:.12em;text-shadow:0 0 14px rgba(0,191,255,.3);font-variant-numeric:tabular-nums
+}
+.auth-bottom{display:flex;justify-content:space-between;align-items:center;gap:6px}
+.auth-timer{color:#7ea8c9;font-size:9px}
+.auth-copy-btn{
+ padding:5px 9px;color:#9de9ff;background:#062746;border:1px solid #12608f;
+ border-radius:6px;font-size:9px;font-weight:800;cursor:pointer
+}
+.auth-copy-btn:hover{color:white;border-color:#00d9ff}
+.auth-hint{margin-top:7px;color:#6485a4;font-size:8px;line-height:1.5}
+
+/* EMPTY */
+.empty{
+ grid-column:1/-1;padding:55px 20px;text-align:center;border:1px dashed #0c5c91;
+ border-radius:15px;background:rgba(2,18,39,.6)
+}
+.empty i{font-size:27px;color:#17618e}
+.empty h3{margin-top:11px;font:10px Orbitron;color:#8cb0d0}
+.empty p{margin-top:5px;color:#4c7195;font-size:8px}
+
+/* MODAL */
+.modal{
+ position:fixed;inset:0;z-index:200;display:none;align-items:center;justify-content:center;
+ padding:20px;background:rgba(0,4,12,.78);backdrop-filter:blur(10px)
+}
+.modal.show{display:flex}
+.modal-box{
+ width:min(450px,100%);border:1px solid #0795d1;border-radius:18px;
+ background:linear-gradient(145deg,#061b38,#020d21);
+ box-shadow:0 30px 80px rgba(0,0,0,.6),0 0 30px rgba(0,128,255,.1);overflow:hidden
+}
+.modal-head{
+ display:flex;justify-content:space-between;align-items:center;padding:16px 18px;
+ border-bottom:1px solid #0a3d65
+}
+.modal-head h3{color:var(--yellow);font:10px Orbitron}
+.modal-close{
+ width:29px;height:29px;border:1px solid #13527d;border-radius:7px;
+ background:#06203b;color:#79c7e9;cursor:pointer
+}
+.modal-body{padding:18px}
+.form-group{margin-bottom:13px}
+.form-group label{
+ display:block;color:#6190b7;margin-bottom:6px;font-size:7px;font-weight:900;letter-spacing:.13em
+}
+.form-group input{
+ width:100%;height:40px;padding:0 11px;border:1px solid #10527e;border-radius:9px;
+ outline:0;background:#020c1c;color:#fff;font-size:10px
+}
+.form-group input:focus{border-color:#00bfff;box-shadow:0 0 12px rgba(0,174,255,.12)}
+.modal-actions{display:flex;justify-content:flex-end;gap:7px;margin-top:18px}
+.modal-btn{
+ height:36px;padding:0 14px;border-radius:8px;border:1px solid #12608f;
+ background:#06213d;color:#9bdfff;font-size:8px;font-weight:800;cursor:pointer
+}
+.modal-btn.primary{
+ color:#fff;border-color:#00aaf0;background:linear-gradient(135deg,#0067d8,#00aeea)
+}
+
+/* TOAST */
+.toast{
+ position:fixed;right:22px;bottom:22px;z-index:300;display:flex;align-items:center;gap:9px;
+ min-width:220px;padding:11px 13px;border:1px solid #0797d1;border-radius:11px;
+ background:linear-gradient(145deg,#06264a,#03142b);
+ box-shadow:0 15px 35px rgba(0,0,0,.45),0 0 18px rgba(0,153,255,.12);
+ transform:translateY(20px);opacity:0;pointer-events:none;transition:.25s
+}
+.toast.show{transform:none;opacity:1}
+.toast-icon{
+ width:27px;height:27px;display:grid;place-items:center;border-radius:7px;
+ background:#063c38;border:1px solid #178b75;color:#2affae;font-size:15px
+}
+.toast-text{color:#dff7ff;font-size:8px;font-weight:700}
+
+/* RESPONSIVE */
+@media(max-width:1200px){
+ .cards{grid-template-columns:repeat(2,minmax(0,1fr))}
+}
+@media(max-width:1050px){
+ html,body{overflow:auto}
+ .container{position:relative;inset:auto;min-height:100vh;height:auto;overflow:visible;padding-top:95px}
+ .layout{height:auto;grid-template-columns:1fr}
+ .sidebar{height:auto;overflow:visible}
+ .sidebar .side:last-child{flex:none}
+ main{height:auto;overflow:visible}
+ .cards,.link-list{overflow:visible}
+}
+@media(max-width:800px){
+ .cards{grid-template-columns:1fr}
+ .content-head{align-items:flex-start}
+ .handover.compact{width:260px}
+}
+@media(max-width:600px){
+ header{height:67px;padding:0 14px}
+ .brand-title{font-size:12px}
+ .brand-sub{font-size:6px}
+ .brand-logo{width:38px;height:38px}
+ .clock{display:none}
+ .container{padding:84px 11px 17px}
+ .content-head{flex-direction:column;gap:10px}
+ .handover.compact{width:100%}
+ .content-title h3{font-size:10px}
+}
+@media(max-width:400px){
+ .account-top{padding:13px 12px 11px}
+ .credential{margin-left:10px;margin-right:10px}
+ .auth-secret-row{flex-wrap:wrap}
+ .auth-secret-input{flex-basis:100%}
+}
+
+
+.quick-open,.quick-delete,.quick-copy{
+ width:25px;height:25px;display:grid;place-items:center;flex:none;
+ border-radius:6px;font-size:8px
+}
+.quick-open{
+ border:1px solid #14517d;color:#71bde4;text-decoration:none
+}
+.quick-copy{
+ border:1px solid #12608f;background:#062746;color:#75dcff;cursor:pointer
+}
+.quick-copy:hover{
+ border-color:#00d9ff;color:#fff;background:#07416b
+}
+.quick-delete{
+ border:1px solid #653045;background:transparent;color:#d86b82;cursor:pointer
+}
+
+</style>
+</head>
+
+<body>
+<header>
+ <div class="brand">
+  <div class="brand-logo"><i class="fa-solid fa-key"></i></div>
+  <div>
+   <div class="brand-title">DATALOGIN FAHMI!</div>
+   <div class="brand-sub">LOGIN MANAGEMENT DASHBOARD</div>
+  </div>
+ </div>
+ <div class="header-right">
+  <div class="clock">
+   <strong id="clock">00:00:00</strong>
+   <span id="date">-</span>
+  </div>
+ </div>
+</header>
+
+<div class="container">
+<div class="layout">
+<aside class="sidebar">
+ <div class="side">
+  <div class="side-title">ACCOUNT CONTROL<span>Kelola data login dengan cepat</span></div>
+  <div class="side-body">
+   <button class="side-btn yellow" id="addAccountBtn"><i class="fa-solid fa-plus"></i>&nbsp; TAMBAH AKUN BARU</button>
+   <div class="side-label">PENCARIAN AKUN</div>
+   <div class="search">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <input id="search" type="text" autocomplete="off" placeholder="Cari akun...">
+   </div>
+   <button class="side-btn dark" id="clearSearch"><i class="fa-solid fa-rotate-left"></i>&nbsp; RESET PENCARIAN</button>
+  </div>
+ </div>
+
+ <div class="side">
+  <div class="side-title">QUICK ACCESS<span>Website yang sering digunakan</span></div>
+  <div class="side-body">
+   <button class="side-btn yellow" id="addLinkBtn"><i class="fa-solid fa-link"></i>&nbsp; TAMBAH LINK</button>
+   <div class="side-label">DAFTAR WEBSITE</div>
+   <div class="link-list" id="links"></div>
+  </div>
+ </div>
+</aside>
+
+<main>
+ <div class="content-head">
+  <div class="content-title">
+   <div class="title-line"></div>
+   <div>
+    <h3>DAFTAR AKUN LOGIN</h3>
+    <p>Username, password, dan authenticator akun</p>
+   </div>
+  </div>
+  <section class="handover compact" id="handover">
+   <div class="handover-head" id="handoverHead">
+    <div class="handover-title">
+     <div class="handover-icon"><i class="fa-solid fa-clipboard"></i></div>
+     <div><strong>FORMAT SERAH TERIMA</strong><span>Generate otomatis</span></div>
+    </div>
+    <i class="fa-solid fa-chevron-down handover-chevron"></i>
+   </div>
+   <div class="handover-body">
+    <div class="handover-output" id="handoverOutput"></div>
+    <button class="copy-handover" id="copyHandover"><i class="fa-regular fa-copy"></i>&nbsp; SALIN FORMAT</button>
+    <div style="clear:both"></div>
+   </div>
+  </section>
+ </div>
+ <div class="cards" id="cards"></div>
+</main>
+</div>
+</div>
+
+<!-- ACCOUNT MODAL -->
+<div class="modal" id="accountModal">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h3 id="accountModalTitle">TAMBAH AKUN BARU</h3>
+   <button class="modal-close" data-close="accountModal"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="modal-body">
+   <form id="accountForm">
+    <input type="hidden" id="editIndex" value="-1">
+    <div class="form-group">
+     <label>NAMA PLATFORM</label>
+     <input id="platformInput" required placeholder="Contoh: GOOGLE DRIVE">
+    </div>
+    <div class="form-group">
+     <label>USERNAME / EMAIL</label>
+     <input id="usernameInput" required placeholder="Username atau email">
+    </div>
+    <div class="form-group">
+     <label>PASSWORD</label>
+     <input id="passwordInput" required placeholder="Password">
+    </div>
+    <div class="modal-actions">
+     <button type="button" class="modal-btn" data-close="accountModal">BATAL</button>
+     <button type="submit" class="modal-btn primary"><i class="fa-solid fa-floppy-disk"></i>&nbsp; SIMPAN AKUN</button>
+    </div>
+   </form>
+  </div>
+ </div>
+</div>
+
+<!-- LINK MODAL -->
+<div class="modal" id="linkModal">
+ <div class="modal-box">
+  <div class="modal-head">
+   <h3>TAMBAH QUICK ACCESS</h3>
+   <button class="modal-close" data-close="linkModal"><i class="fa-solid fa-xmark"></i></button>
+  </div>
+  <div class="modal-body">
+   <form id="linkForm">
+    <div class="form-group">
+     <label>NAMA WEBSITE</label>
+     <input id="linkNameInput" required placeholder="Contoh: ADMIN">
+    </div>
+    <div class="form-group">
+     <label>URL WEBSITE</label>
+     <input id="linkUrlInput" type="url" required placeholder="https://google.com">
+    </div>
+    <div class="modal-actions">
+     <button type="button" class="modal-btn" data-close="linkModal">BATAL</button>
+     <button type="submit" class="modal-btn primary"><i class="fa-solid fa-link"></i>&nbsp; SIMPAN LINK</button>
+    </div>
+   </form>
+  </div>
+ </div>
+</div>
+
+<!-- TOAST -->
+<div class="toast" id="toast">
+ <div class="toast-icon"><i class="fa-solid fa-check"></i></div>
+ <div class="toast-text" id="toastText">Berhasil</div>
+</div>
+
+<script>
+/*
+ * AUTHENTICATOR TOTP
+ * Menggunakan Web Crypto API dan HMAC-SHA1.
+ * Secret key disimpan di localStorage browser.
+ */
+
+/* DATA DEFAULT
+ * Untuk keamanan, data login yang sebelumnya ditempelkan ke chat
+ * tidak ditulis ulang di bagian ini. Isi array di bawah dengan data
+ * milikmu sendiri, atau biarkan data lama yang tersimpan tetap dipakai.
+ */
+
+const DEFAULT_DATA = [
+  ["GOOGLE DRIVE", "fahmirizki8484@gmail.com", "fahmi2608@"],
+  ["ADMIN IDN", "vyoaafahmirizki", "S3n4y@nC!Ty"],
+  ["PWR WD", "FAHMIRIZKI", "CutiIndo@2025"],
+  ["BK", "fahmirizki8484@gmail.com", "c71603a7"],
+  ["DASHBOARD OPS", "fahmi.sabtomi", "Fahmi2608@123"],
+  ["BLOGSITUS", "fahmirizki8484@gmail.com", "c71603a7"],
+  ["DASHBOARD INPUT QRIS", "fahmirizki8484@gmail.com", "c71603a7"],
+  ["DASHBOARD AUTO SCATTER", "fahmirizki8484@gmail.com", "c71603a7"],
+  ["LC BOT AI", "ZIATOGEL@chatbot.com", "aCRm(OM@m(jHKc1f!RS*4y$K"],
+  ["DASHBOARD SCATTER LAMA", "fahmirizki8484@gmail.com", "c71603a7"],
+  ["ZONAMAIN", "fahmirizki8484@gmail.com", "shbahsvab567"],
+  ["QRIS XPAY", "vyoaafahmirizki", "asd123"],
+  ["QRIS P2MIH", "fahmirizki8484@gmail.com", "ZIa@Tog3LP4y2m1h"],
+  ["QRIS KITATRUST", "cszia1kitatrust@gmail.com", "k46B*K#ebWa9"],
+  ["QRIS MINERAPAY", "fahmirizki8484@gmail.com", "@Aa112233"],
+  ["LC MASTER INC", "zialcmaster@gmail.com", "aCRm(OM@m(jHKc1f!RS*4y$K"],
+  ["LC MASTER TAWKTO", "ziatogel88@gmail.com", "ziatogel88@gmail.com"],
+  ["TELEGRAM BOT", "telegramzia19@gmail.com", "Ziazia123"],
+  ["DASHBOARD USDT", "idn_ZIATOGEL", "6xQhadr2d7O2RseFaWHmHFyfBrZ9rY"],
+  ["WORDPRESS / WP", "smbadmin", "0aC!h(BaG1H9hVdh0eD8NUJO"]
+];
+
+const DEFAULT_LINKS = [
+  ["ADMIN IDN", "https://agwl9.suksesbogil.com/index.php"],
+  ["PWR", "https://zia.akseswdsmb.com"],
+  ["BK", "https://bk.augipt.com/ziatogel/dashboard/account/login"],
+  ["DASHBOARD OPS", "https://auditsmb88.com/index.php?p=login"],
+  ["BLOGSITUS", "https://blogsitus.smbservice.xyz/login"],
+  ["PUSAT INFO ZIATOGEL", "https://pusatinfoziatogel.com/"],
+  ["DASHBOARD INPUT QRIS", "https://qp-dashboard.com/login"],
+  ["ZONAMAIN BIASA", "https://smbaz8.zonamain.com/"],
+  ["ZONAMAIN BOTFIRE", "https://smbaz8.bottifire.com/"],
+  ["QRIS XPAY", "https://m2qris.com"],
+  ["QRIS MINERAPAY", "https://backoffice.minerapay.com/dashboard"],
+  ["QRIS P2MIH", "https://apps.leonpayy.com/login"],
+  ["QRIS KITATRUST", "https://app.kitatrust.com/"],
+  ["DASHBOARD SCATTER LAMA", "https://bonussmb.com/history"],
+  ["DASHBOARD SCATTER BARU", "https://autoscatter.smbservice.xyz/"],
+  ["LC BOT AI", "https://merchant.majubersama168.com/m/ziatogel/backoffice/login"],
+  ["LC MASTER INC", "https://accounts.livechat.com/"],
+  ["LC MASTER TAWKTO", "https://dashboard.tawk.to/login"],
+  ["TELEGRAM BOT", "https://telegram.smbgroup.io/link"],
+  ["WORDPRESS", "https://ziablog207.com/wp-login.php"],
+  ["RTP", "https://rtp.zonamain.com/login"],
+  ["USDT", "https://pngusdt.com/usdt-manager"],
+  ["PORTAL CHAT", "https://ziatogel.portalsmb.com/login"]
+];
+
+
+const $=id=>document.getElementById(id);
+const clone=x=>JSON.parse(JSON.stringify(x));
+
+function load(key,defaults){
+ try{
+  const x=JSON.parse(localStorage.getItem(key));
+  return Array.isArray(x)?x:clone(defaults);
+ }catch{
+  return clone(defaults);
+ }
+}
+function save(key,value){
+ localStorage.setItem(key,JSON.stringify(value));
+}
+function esc(v){
+ return String(v??"").replace(/[&<>"']/g,m=>({
+  "&":"&amp;","<":"&lt;",">":"&gt;",'"':"&quot;","'":"&#039;"
+ }[m]));
+}
+
+let data = clone(DEFAULT_DATA);
+let links = clone(DEFAULT_LINKS);
+let searchTerm="";
+let passState={};
+
+function makeAccountId(){
+ if(globalThis.crypto?.randomUUID)return "acc-"+crypto.randomUUID();
+ return "acc-"+Date.now().toString(36)+"-"+Math.random().toString(36).slice(2);
+}
+
+/* ID permanen supaya secret authenticator mengikuti akun yang benar */
+let accountIds=load("ziatogel_account_ids",[]);
+while(accountIds.length<data.length)accountIds.push(makeAccountId());
+accountIds=accountIds.slice(0,data.length);
+save("ziatogel_account_ids",accountIds);
+
+function loadObject(key){
+ try{
+  const value=JSON.parse(localStorage.getItem(key));
+  return value&&typeof value==="object"&&!Array.isArray(value)?value:{};
+ }catch{return {};}
+}
+let authSecrets=loadObject("ziatogel_auth_secrets");
+let lastTotpStep=-1;
+
+/* UTILITY */
+function toast(text,ok=true){
+ $("toastText").textContent=text;
+ $("toast").querySelector(".toast-icon").innerHTML=ok
+  ?'<i class="fa-solid fa-check"></i>'
+  :'<i class="fa-solid fa-triangle-exclamation"></i>';
+ $("toast").classList.add("show");
+ clearTimeout(toast.timer);
+ toast.timer=setTimeout(()=>$("toast").classList.remove("show"),2200);
+}
+
+async function copyText(text,msg){
+ try{
+  await navigator.clipboard.writeText(String(text));
+  toast(msg);
+ }catch{
+  const a=document.createElement("textarea");
+  a.value=String(text);
+  a.style.cssText="position:fixed;opacity:0";
+  document.body.appendChild(a);
+  a.select();
+  try{
+   document.execCommand("copy");
+   toast(msg);
+  }catch{toast("Gagal menyalin",false);}
+  a.remove();
+ }
+}
+
+/* CLOCK */
+function clock(){
+ const d=new Date();
+ $("clock").textContent=d.toLocaleTimeString("id-ID",{hour12:false});
+ $("date").textContent=d.toLocaleDateString("id-ID",{
+  weekday:"long",day:"2-digit",month:"long",year:"numeric"
+ }).toUpperCase();
+}
+clock();
+setInterval(clock,1000);
+
+/* AUTHENTICATOR TOTP */
+function base32ToBytes(secret){
+ const alphabet="ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+ const clean=String(secret).toUpperCase().replace(/[\s=-]/g,"");
+ if(!clean||!/^[A-Z2-7]+$/.test(clean)){
+  throw new Error("Secret key Base32 tidak valid");
+ }
+ let bits="";
+ for(const char of clean){
+  const value=alphabet.indexOf(char);
+  if(value<0)throw new Error("Secret key tidak valid");
+  bits+=value.toString(2).padStart(5,"0");
+ }
+ const bytes=[];
+ for(let i=0;i+8<=bits.length;i+=8)bytes.push(parseInt(bits.slice(i,i+8),2));
+ if(!bytes.length)throw new Error("Secret key terlalu pendek");
+ return new Uint8Array(bytes);
+}
+
+async function generateTOTP(secret,timeSeconds=Math.floor(Date.now()/1000)){
+ const keyBytes=base32ToBytes(secret);
+ const counter=Math.floor(timeSeconds/30);
+ const counterBytes=new Uint8Array(8);
+ let n=counter;
+
+ for(let i=7;i>=0;i--){
+  counterBytes[i]=n%256;
+  n=Math.floor(n/256);
+ }
+
+ const key=await crypto.subtle.importKey(
+  "raw",keyBytes,{name:"HMAC",hash:"SHA-1"},false,["sign"]
+ );
+ const signature=new Uint8Array(await crypto.subtle.sign("HMAC",key,counterBytes));
+ const offset=signature[signature.length-1]&15;
+ const binary=(
+  ((signature[offset]&127)<<24)|
+  ((signature[offset+1]&255)<<16)|
+  ((signature[offset+2]&255)<<8)|
+  (signature[offset+3]&255)
+ );
+ return String(binary%1000000).padStart(6,"0");
+}
+
+async function refreshAuthCodes(force=false){
+ const currentStep=Math.floor(Date.now()/30000);
+ if(!force&&currentStep===lastTotpStep)return;
+ lastTotpStep=currentStep;
+
+ document.querySelectorAll(".auth-code[data-auth-id]").forEach(async el=>{
+  const accountId=el.dataset.authId;
+  const secret=authSecrets[accountId];
+
+  if(!secret){
+   el.textContent="------";
+   return;
+  }
+
+  try{
+   const code=await generateTOTP(secret);
+   if(el.isConnected&&el.dataset.authId===accountId)el.textContent=code;
+  }catch{
+   if(el.isConnected)el.textContent="ERROR";
+  }
+ });
+}
+
+function updateAuthTimers(){
+ const seconds=Math.floor(Date.now()/1000);
+ const remaining=30-(seconds%30);
+ document.querySelectorAll(".auth-timer").forEach(el=>{
+  el.textContent=`Kode berganti dalam ${remaining} dtk`;
+ });
+ refreshAuthCodes();
+}
+setInterval(updateAuthTimers,1000);
+
+/* ACCOUNTS */
+function filtered(){
+ const q=searchTerm.toLowerCase().trim();
+ return data.map((item,index)=>({item,index})).filter(({item})=>
+  !q||String(item[0]).toLowerCase().includes(q)||String(item[1]).toLowerCase().includes(q)
+ );
+}
+
+function renderAccounts(){
+ const list=filtered();
+
+ if(!list.length){
+  $("cards").innerHTML=`
+   <div class="empty">
+    <i class="fa-solid fa-magnifying-glass"></i>
+    <h3>${data.length?"AKUN TIDAK DITEMUKAN":"BELUM ADA DATA AKUN"}</h3>
+    <p>${data.length?"Coba gunakan kata pencarian lain.":"Klik TAMBAH AKUN BARU untuk mulai menambahkan akun."}</p>
+   </div>`;
+  return;
+ }
+
+ $("cards").innerHTML=list.map(({item,index})=>{
+  const [name,user,pass]=item;
+  const visible=!!passState[index];
+  const accountId=accountIds[index];
+  const hasSecret=!!authSecrets[accountId];
+  const orderOptions=data.map((_,i)=>`
+   <option value="${i+1}" ${i===index?"selected":""}>Nomor ${i+1}</option>
+  `).join("");
+
+  return`
+  <article class="account">
+   <div class="account-top">
+    <div class="platform">
+     <div class="platform-number">${index+1}</div>
+     <div class="platform-info">
+      <h4>${esc(name)}</h4>
+      <span>LOGIN ACCOUNT</span>
+     </div>
+    </div>
+    <div class="footer-actions">
+     <button class="icon-btn" data-action="edit" data-index="${index}" title="Edit">
+      <i class="fa-solid fa-pen"></i>
+     </button>
+     <button class="icon-btn" data-action="delete" data-index="${index}" title="Hapus">
+      <i class="fa-solid fa-trash"></i>
+     </button>
+    </div>
+   </div>
+
+   <div class="order-control">
+    <label for="order-${index}">URUTAN</label>
+    <select id="order-${index}" aria-label="Pilih nomor urutan">${orderOptions}</select>
+    <button type="button" data-action="move" data-index="${index}">PINDAH</button>
+   </div>
+
+   <div class="credential">
+    <div class="cred-top">
+     <span class="cred-label">USERNAME / EMAIL</span>
+     <div class="cred-buttons">
+      <button class="icon-btn" data-action="copy-user" data-index="${index}" title="Salin username">
+       <i class="fa-regular fa-copy"></i>
+      </button>
+     </div>
+    </div>
+    <div class="cred-value">${esc(user)}</div>
+   </div>
+
+   <div class="credential">
+    <div class="cred-top">
+     <span class="cred-label">PASSWORD</span>
+     <div class="cred-buttons">
+      <button class="icon-btn" data-action="toggle" data-index="${index}" title="Tampilkan/sembunyikan password">
+       <i class="fa-regular ${visible?"fa-eye-slash":"fa-eye"}"></i>
+      </button>
+      <button class="icon-btn" data-action="copy-pass" data-index="${index}" title="Salin password">
+       <i class="fa-regular fa-copy"></i>
+      </button>
+     </div>
+    </div>
+    <div class="cred-value">${visible?esc(pass):"••••••••••••"}</div>
+   </div>
+
+   <div class="auth-box">
+    <div class="auth-heading">
+     <strong><i class="fa-solid fa-shield-halved"></i> AUTHENTICATOR</strong>
+     <span class="auth-status">${hasSecret?"TERPASANG":"BELUM DIATUR"}</span>
+    </div>
+
+    <div class="auth-secret-row">
+     <input
+      class="auth-secret-input"
+      data-auth-input="${index}"
+      type="password"
+      autocomplete="off"
+      spellcheck="false"
+      placeholder="Tempel secret Base32 atau kode migrasi Google"
+      aria-label="Secret key authenticator"
+      value="${esc(authSecrets[accountId]||"")}"
+     >
+     <button type="button" class="auth-save-btn" data-action="save-auth" data-index="${index}">SIMPAN</button>
+     <button type="button" class="auth-clear-btn" data-action="clear-auth" data-index="${index}" title="Hapus secret">
+      <i class="fa-solid fa-trash"></i>
+     </button>
+    </div>
+
+    <div class="auth-result">
+     <div class="auth-result-label">KODE OTP 6 DIGIT</div>
+     <strong class="auth-code" data-auth-id="${esc(accountId)}">${hasSecret?"Memuat":"------"}</strong>
+     <div class="auth-bottom">
+      <span class="auth-timer">Kode berganti dalam 30 dtk</span>
+      <button type="button" class="auth-copy-btn" data-action="copy-otp" data-index="${index}">
+       <i class="fa-regular fa-copy"></i> SALIN OTP
+      </button>
+     </div>
+    </div>
+    <div class="auth-hint">
+  Tempel secret Base32 atau kode otpauth-migration dari Google Authenticator.
+  Jika berisi beberapa akun, pilih akun yang sesuai.
+</div>
+   </div>
+  </article>`;
+ }).join("");
+
+ refreshAuthCodes(true);
+ updateAuthTimers();
+}
+
+function moveAccount(fromIndex,targetPosition){
+ const toIndex=Number(targetPosition)-1;
+
+ if(!Number.isInteger(fromIndex)||!Number.isInteger(toIndex)||
+ fromIndex<0||fromIndex>=data.length||toIndex<0||toIndex>=data.length){
+  toast("Nomor urutan tidak valid",false);
+  return;
+ }
+ if(fromIndex===toIndex){
+  toast("Akun sudah berada di urutan tersebut");
+  return;
+ }
+
+ const [account]=data.splice(fromIndex,1);
+ data.splice(toIndex,0,account);
+
+ const [accountId]=accountIds.splice(fromIndex,1);
+ accountIds.splice(toIndex,0,accountId);
+
+ passState={};
+ save("ziatogel_data",data);
+ save("ziatogel_account_ids",accountIds);
+ renderAccounts();
+ updateHandover();
+ toast(`Akun berhasil dipindahkan ke nomor ${toIndex+1}`);
+}
+
+$("cards").addEventListener("click",async e=>{
+ const btn=e.target.closest("[data-action]");
+ if(!btn)return;
+
+ const i=Number(btn.dataset.index);
+ const action=btn.dataset.action;
+
+ if(action==="move"){
+  const select=$("order-"+i);
+  if(select)moveAccount(i,select.value);
+  return;
+ }
+
+ if(!data[i])return;
+
+ 
+if(action==="save-auth"){
+  const input=document.querySelector(`[data-auth-input="${i}"]`);
+  if(!input)return;
+
+  const raw=input.value.trim();
+  if(!raw){
+    toast("Masukkan secret authenticator terlebih dahulu",false);
+    return;
+  }
+
+  try{
+    let secret="";
+    
+    // Jika input berupa QR migration Google Authenticator
+    if(/^otpauth-migration:\/\//i.test(raw)){
+      const accounts=decodeGoogleAuthMigration(raw);
+
+      // Pilih akun dari paket migrasi
+      let selected=accounts[0];
+
+      if(accounts.length>1){
+        const choices=accounts.map((a,index)=>
+          `${index+1}. ${a.issuer ? a.issuer+" - " : ""}${a.name} (${a.type}, ${a.algorithm}, ${a.digits} digit)`
+        ).join("\n");
+
+        const answer=prompt(
+          `Ditemukan ${accounts.length} akun authenticator.\n\n${choices}\n\nMasukkan nomor akun yang ingin disimpan:`,
+          "1"
+        );
+
+        if(answer===null)return;
+
+        const selectedIndex=Number(answer)-1;
+
+        if(!Number.isInteger(selectedIndex) ||
+           selectedIndex<0 ||
+           selectedIndex>=accounts.length){
+          toast("Nomor akun tidak valid",false);
+          return;
+        }
+
+        selected=accounts[selectedIndex];
+      }
+
+      // Dashboard ini menghasilkan TOTP 6 digit menggunakan SHA-1.
+      if(selected.type!=="TOTP" ||
+         selected.algorithm!=="SHA1" ||
+         selected.digits!==6){
+        toast("Akun ini bukan TOTP SHA-1 6 digit yang didukung",false);
+        return;
+      }
+
+      secret=selected.secret;
+    }else{
+      // Mendukung secret Base32 biasa
+      secret=raw.toUpperCase().replace(/[\s=]/g,"");
+
+      if(!/^[A-Z2-7]{16,}$/.test(secret)){
+        toast("Secret Base32 tidak valid atau terlalu pendek",false);
+        return;
+      }
+    }
+
+    // Uji secret sebelum disimpan
+    await generateTOTP(secret);
+
+    authSecrets[accountIds[i]]=secret;
+    save("ziatogel_auth_secrets",authSecrets);
+
+    lastTotpStep=-1;
+    renderAccounts();
+    toast("Authenticator berhasil disimpan");
+  }catch(error){
+    console.error("Authenticator error:",error);
+    toast(
+      "Kode migrasi tidak valid atau tidak dapat dibaca",
+      false
+    );
+  }
+
+  return;
+}
+
+
+ if(action==="clear-auth"){
+  if(!confirm(`Hapus secret authenticator untuk "${data[i][0]}"?`))return;
+  delete authSecrets[accountIds[i]];
+  save("ziatogel_auth_secrets",authSecrets);
+  lastTotpStep=-1;
+  renderAccounts();
+  toast("Secret authenticator dihapus");
+  return;
+ }
+
+ if(action==="copy-otp"){
+  const id=accountIds[i];
+  const secret=authSecrets[id];
+
+  if(!secret){
+   toast("Simpan secret key terlebih dahulu",false);
+   return;
+  }
+
+  try{
+   // Hitung kode terbaru ketika tombol ditekan.
+   const code=await generateTOTP(secret);
+   await copyText(code,"Kode OTP berhasil disalin");
+  }catch{
+   toast("Gagal menghasilkan OTP",false);
+  }
+  return;
+ }
+
+ if(action==="copy-user")copyText(data[i][1],"Username berhasil disalin");
+ if(action==="copy-pass")copyText(data[i][2],"Password berhasil disalin");
+
+ if(action==="toggle"){
+  passState[i]=!passState[i];
+  renderAccounts();
+ }
+
+ if(action==="edit")editAccount(i);
+ if(action==="delete")deleteAccount(i);
+});
+
+function deleteAccount(i){
+ if(!confirm(`Hapus akun "${data[i][0]}"?\n\nData tidak dapat dikembalikan.`))return;
+
+ const removedId=accountIds[i];
+ data.splice(i,1);
+ accountIds.splice(i,1);
+ delete authSecrets[removedId];
+ passState={};
+
+ save("ziatogel_data",data);
+ save("ziatogel_account_ids",accountIds);
+ save("ziatogel_auth_secrets",authSecrets);
+
+ renderAccounts();
+ updateHandover();
+ toast("Akun berhasil dihapus");
+}
+
+/* MODAL */
+function openModal(id){$(id).classList.add("show")}
+function closeModal(id){$(id).classList.remove("show")}
+
+function addAccount(){
+ $("accountModalTitle").textContent="TAMBAH AKUN BARU";
+ $("editIndex").value="-1";
+ $("platformInput").value="";
+ $("usernameInput").value="";
+ $("passwordInput").value="";
+ openModal("accountModal");
+ setTimeout(()=>$("platformInput").focus(),100);
+}
+
+function editAccount(i){
+ const x=data[i];
+ $("accountModalTitle").textContent="EDIT AKUN";
+ $("editIndex").value=i;
+ $("platformInput").value=x[0];
+ $("usernameInput").value=x[1];
+ $("passwordInput").value=x[2];
+ openModal("accountModal");
+ setTimeout(()=>$("platformInput").focus(),100);
+}
+
+$("addAccountBtn").onclick=addAccount;
+
+$("accountForm").onsubmit=e=>{
+ e.preventDefault();
+ const i=Number($("editIndex").value);
+ const item=[
+  $("platformInput").value.trim(),
+  $("usernameInput").value.trim(),
+  $("passwordInput").value
+ ];
+
+ if(item.some(x=>!x)){
+  toast("Semua data wajib diisi",false);
+  return;
+ }
+
+ if(i>=0){
+  data[i]=item;
+  toast("Data akun berhasil diperbarui");
+ }else{
+  data.push(item);
+  accountIds.push(makeAccountId());
+  save("ziatogel_account_ids",accountIds);
+  toast("Akun baru berhasil ditambahkan");
+ }
+
+ passState={};
+ save("ziatogel_data",data);
+ renderAccounts();
+ updateHandover();
+ closeModal("accountModal");
+};
+
+/* SEARCH */
+$("search").oninput=e=>{
+ searchTerm=e.target.value;
+ renderAccounts();
+};
+$("clearSearch").onclick=()=>{
+ searchTerm="";
+ $("search").value="";
+ renderAccounts();
+ $("search").focus();
+};
+
+/* LINKS */
+function renderLinks(){
+ if(!links.length){
+  $("links").innerHTML='<div style="color:#547796;font-size:8px;text-align:center;padding:15px 5px">BELUM ADA LINK</div>';
+  return;
+ }
+
+ $("links").innerHTML=links.map((x,i)=>`
+  <div class="quick-link">
+   <div class="quick-icon"><i class="fa-solid fa-link"></i></div>
+   <div class="quick-info">
+    <div class="quick-name">${esc(x[0])}</div>
+    <div class="quick-url">${esc(x[1])}</div>
+   </div>
+   <a class="quick-open" href="${esc(x[1])}" target="_blank" rel="noopener noreferrer" title="Buka">
+    <i class="fa-solid fa-arrow-up-right-from-square"></i>
+   </a>
+   <button class="quick-copy" data-copy-link="${i}" title="Salin link">
+ <i class="fa-regular fa-copy"></i>
+</button>
+   <button class="quick-delete" data-link="${i}" title="Hapus"><i class="fa-solid fa-trash"></i></button>
+  </div>
+ `).join("");
+}
+
+
+$("links").addEventListener("click",async e=>{
+ const copyBtn=e.target.closest("[data-copy-link]");
+
+ if(copyBtn){
+  const i=Number(copyBtn.dataset.copyLink);
+  if(!links[i])return;
+
+  await copyText(links[i][1],"Link berhasil disalin");
+  return;
+ }
+
+ const btn=e.target.closest("[data-link]");
+ if(!btn)return;
+
+ const i=Number(btn.dataset.link);
+ if(!links[i])return;
+
+ if(!confirm(`Hapus link "${links[i][0]}"?`))return;
+
+ links.splice(i,1);
+ save("ziatogel_links",links);
+ renderLinks();
+ toast("Link berhasil dihapus");
+});
+
+
+$("addLinkBtn").onclick=()=>{
+ $("linkForm").reset();
+ openModal("linkModal");
+};
+
+$("linkForm").onsubmit=e=>{
+ e.preventDefault();
+ const name=$("linkNameInput").value.trim();
+ let url=$("linkUrlInput").value.trim();
+
+ if(!name||!url){
+  toast("Nama dan URL wajib diisi",false);
+  return;
+ }
+ if(!/^https?:\/\//i.test(url))url="https://"+url;
+
+ links.push([name,url]);
+ save("ziatogel_links",links);
+ renderLinks();
+ closeModal("linkModal");
+ toast("Link berhasil ditambahkan");
+};
+
+/* HANDOVER */
+function find(...words){
+ return data.find(x=>{
+  const n=String(x[0]).toLowerCase();
+  return words.some(w=>n.includes(w));
+ })||["-","-","-"];
+}
+
+function updateHandover(){
+ const d=find("drive");
+ const admin=find("admin idn");
+ const pwr=find("pwr wd","power wd");
+ const bk=find("bk");
+ const xpay=find("xpay");
+ const minera=find("qris minerapay","minerapay");
+ const zona=find("zonamain");
+ const scatter=find("scatter");
+ const lcInc=find("lc master inc");
+ const lcTawk=find("lc master tawkto","tawkto");
+ const telegram=find("telegram bot");
+ const mineraMaster=find("minerapay master");
+ const usdt=find("dashboard usdt","usdt");
+ const portal=find("portal chat");
+ const wordpress=find("wordpress","wp");
+
+ const row=(title,x)=>`${title}\nUsername : ${x[1]}\nPassword : ${x[2]}`;
+
+ $("handoverOutput").textContent=[
+  "FORMAT SERAH TERIMA",
+  row("GOOGLE DRIVE",d),
+  row("ADMIN IDN",admin),
+  row("PWR WD",pwr),
+  row("BK",bk),
+  row("QRIS XPAY",xpay),
+  row("QRIS MINERAPAY",minera),
+  row("ZONAMAIN",zona),
+  row("DASHBOARD SCATTER",scatter),
+  row("LC MASTER INC",lcInc),
+  row("LC MASTER TAWKTO",lcTawk),
+  row("TELEGRAM BOT",telegram),
+  row("MINERAPAY MASTER",mineraMaster),
+  row("DASHBOARD USDT",usdt),
+  row("PORTAL CHAT",portal),
+  row("WORDPRESS / WP",wordpress)
+ ].join("\n\n");
+}
+
+$("handoverHead").onclick=()=>{$("handover").classList.toggle("open")};
+$("copyHandover").onclick=()=>copyText($("handoverOutput").textContent,"Format serah terima berhasil disalin");
+
+/* MODAL CLOSE */
+document.addEventListener("click",e=>{
+ const close=e.target.closest("[data-close]");
+ if(close)closeModal(close.dataset.close);
+ if(e.target.classList.contains("modal"))e.target.classList.remove("show");
+});
+document.addEventListener("keydown",e=>{
+ if(e.key==="Escape"){
+  document.querySelectorAll(".modal.show").forEach(x=>x.classList.remove("show"));
+ }
+});
+
+/* INIT */
+renderAccounts();
+renderLinks();
+updateHandover();
+refreshAuthCodes(true);
+updateAuthTimers();
+
+
+function decodeGoogleAuthMigration(input) {
+  const text = input.trim();
+
+  if (!text.startsWith("otpauth-migration://")) {
+    throw new Error("Format bukan kode migrasi Google Authenticator.");
+  }
+
+  const url = new URL(text);
+  const encoded = url.searchParams.get("data");
+
+  if (!encoded) {
+    throw new Error("Data migrasi tidak ditemukan.");
+  }
+
+  const binary = atob(
+    encoded.replace(/-/g, "+").replace(/_/g, "/")
+      .padEnd(Math.ceil(encoded.length / 4) * 4, "=")
+  );
+
+  const bytes = Uint8Array.from(binary, c => c.charCodeAt(0));
+
+  function readVarint(state) {
+    let value = 0;
+    let shift = 0;
+
+    while (state.pos < bytes.length) {
+      const b = bytes[state.pos++];
+      value += (b & 127) * Math.pow(2, shift);
+
+      if (!(b & 128)) return value;
+      shift += 7;
+
+      if (shift > 49) throw new Error("Data protobuf tidak valid.");
+    }
+
+    throw new Error("Data migrasi terpotong.");
+  }
+
+  function readField(data, state) {
+    let value = 0;
+    let shift = 0;
+
+    while (state.pos < data.length) {
+      const b = data[state.pos++];
+      value += (b & 127) * Math.pow(2, shift);
+
+      if (!(b & 128)) return value;
+      shift += 7;
+
+      if (shift > 49) throw new Error("Data protobuf tidak valid.");
+    }
+
+    throw new Error("Data protobuf terpotong.");
+  }
+
+  function parseMessage(data, callback) {
+    const state = { pos: 0 };
+
+    while (state.pos < data.length) {
+      const tag = readField(data, state);
+      const field = Math.floor(tag / 8);
+      const wire = tag & 7;
+
+      if (!field) throw new Error("Nomor field tidak valid.");
+
+      let value;
+
+      if (wire === 0) {
+        value = readField(data, state);
+      } else if (wire === 2) {
+        const length = readField(data, state);
+        if (length > data.length - state.pos) {
+          throw new Error("Panjang data migrasi tidak valid.");
+        }
+        value = data.slice(state.pos, state.pos + length);
+        state.pos += length;
+      } else if (wire === 1) {
+        state.pos += 8;
+        if (state.pos > data.length) throw new Error("Data terpotong.");
+        continue;
+      } else if (wire === 5) {
+        state.pos += 4;
+        if (state.pos > data.length) throw new Error("Data terpotong.");
+        continue;
+      } else {
+        throw new Error("Format protobuf tidak didukung.");
+      }
+
+      callback(field, wire, value);
+    }
+  }
+
+  function decodeAccount(data) {
+    const account = {
+      secretBytes: null,
+      name: "",
+      issuer: "",
+      algorithm: 1,
+      digits: 6,
+      type: 2,
+      counter: 0
+    };
+
+    parseMessage(data, (field, wire, value) => {
+      if (field === 1 && wire === 2) account.secretBytes = value;
+      if (field === 2 && wire === 2) account.name = new TextDecoder().decode(value);
+      if (field === 3 && wire === 2) account.issuer = new TextDecoder().decode(value);
+      if (field === 4 && wire === 0) account.algorithm = value;
+      if (field === 5 && wire === 0) account.digits = value === 2 ? 8 : 6;
+      if (field === 6 && wire === 0) account.type = value;
+      if (field === 7 && wire === 0) account.counter = value;
+    });
+
+    if (!account.secretBytes?.length) return null;
+
+    return {
+      name: account.name || account.issuer || "Akun Authenticator",
+      issuer: account.issuer,
+      secret: toBase32(account.secretBytes),
+      digits: account.digits,
+      algorithm: account.algorithm === 2 ? "SHA256" :
+                 account.algorithm === 3 ? "SHA512" : "SHA1",
+      type: account.type === 1 ? "HOTP" : "TOTP",
+      counter: account.counter
+    };
+  }
+
+  function toBase32(data) {
+    const alphabet = "ABCDEFGHIJKLMNOPQRSTUVWXYZ234567";
+    let bits = 0;
+    let buffer = 0;
+    let output = "";
+
+    for (const byte of data) {
+      buffer = (buffer << 8) | byte;
+      bits += 8;
+
+      while (bits >= 5) {
+        output += alphabet[(buffer >>> (bits - 5)) & 31];
+        bits -= 5;
+      }
+    }
+
+    if (bits > 0) {
+      output += alphabet[(buffer << (5 - bits)) & 31];
+    }
+
+    return output;
+  }
+
+  const accounts = [];
+
+  parseMessage(bytes, (field, wire, value) => {
+    if (field === 1 && wire === 2) {
+      const account = decodeAccount(value);
+      if (account) accounts.push(account);
+    }
+  });
+
+  if (!accounts.length) {
+    throw new Error("Tidak ditemukan akun dalam kode migrasi.");
+  }
+
+  return accounts;
+}
+
+</script>
+</body>
+</html>
