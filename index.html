@@ -390,8 +390,53 @@ main{
  display:block;margin:6px 0;color:#00d9ff;font:900 27px Orbitron,monospace;
  letter-spacing:.12em;text-shadow:0 0 14px rgba(0,191,255,.3);font-variant-numeric:tabular-nums
 }
-.auth-bottom{display:flex;justify-content:space-between;align-items:center;gap:6px}
-.auth-timer{color:#7ea8c9;font-size:9px}
+.auth-bottom{display:flex;justify-content:space-between;align-items:center;gap:8px}
+
+/* TIMER OTP - HITUNG MUNDUR 30 DETIK */
+.auth-timer-wrap{flex:1;min-width:0;display:flex;flex-direction:column;gap:5px}
+.auth-timer-row{
+ display:flex;align-items:center;gap:6px;
+ color:#00d9ff;font-size:11px;font-weight:800;letter-spacing:.04em
+}
+.auth-timer-row i{
+ font-size:11px;color:#00d9ff;
+ text-shadow:0 0 8px rgba(0,217,255,.55);
+ animation:timer-spin 4s linear infinite
+}
+@keyframes timer-spin{from{transform:rotate(0)}to{transform:rotate(360deg)}}
+.auth-timer{
+ color:#00d9ff;font-size:11px;font-weight:800;letter-spacing:.03em;
+ text-shadow:0 0 8px rgba(0,217,255,.35);
+ font-variant-numeric:tabular-nums;white-space:nowrap
+}
+.auth-timer.warn{color:#ffd400;text-shadow:0 0 8px rgba(255,212,0,.45)}
+.auth-timer.danger{
+ color:#ff4e69;text-shadow:0 0 9px rgba(255,78,105,.55);
+ animation:timer-pulse .65s ease-in-out infinite
+}
+@keyframes timer-pulse{0%,100%{opacity:1}50%{opacity:.5}}
+
+.auth-progress{
+ height:5px;border-radius:3px;background:rgba(0,18,42,.9);
+ overflow:hidden;border:1px solid rgba(0,170,255,.2);
+ box-shadow:inset 0 1px 2px rgba(0,0,0,.4)
+}
+.auth-progress-bar{
+ height:100%;border-radius:3px;
+ background:linear-gradient(90deg,#00bfff,#00d9ff);
+ box-shadow:0 0 8px rgba(0,217,255,.6);
+ transition:width 1s linear,background .4s,box-shadow .4s
+}
+.auth-progress-bar.warn{
+ background:linear-gradient(90deg,#ffaa00,#ffd400);
+ box-shadow:0 0 8px rgba(255,212,0,.6)
+}
+.auth-progress-bar.danger{
+ background:linear-gradient(90deg,#ff2050,#ff4e69);
+ box-shadow:0 0 10px rgba(255,78,105,.7);
+ animation:progress-pulse .65s ease-in-out infinite
+}
+@keyframes progress-pulse{0%,100%{opacity:1}50%{opacity:.5}}
 .auth-copy-btn{
  padding:5px 9px;color:#9de9ff;background:#062746;border:1px solid #12608f;
  border-radius:6px;font-size:9px;font-weight:800;cursor:pointer
@@ -889,8 +934,34 @@ async function refreshAuthCodes(force=false){
 function updateAuthTimers(){
  const seconds=Math.floor(Date.now()/1000);
  const remaining=30-(seconds%30);
+ const percent=(remaining/30)*100;
+
  document.querySelectorAll(".auth-timer").forEach(el=>{
   el.textContent=`Kode berganti dalam ${remaining} dtk`;
+
+  // Update progress bar di dalam wrapper yang sama
+  const wrap=el.closest(".auth-timer-wrap");
+  if(!wrap)return;
+  const bar=wrap.querySelector(".auth-progress-bar");
+  if(!bar)return;
+
+  bar.style.width=percent.toFixed(2)+"%";
+
+  // Reset state warna
+  el.classList.remove("warn","danger");
+  bar.classList.remove("warn","danger");
+
+  // Warna berubah sesuai sisa waktu:
+  // > 10 dtk -> biru/cyan (normal)
+  // 6-10 dtk -> kuning (warning)
+  // <= 5 dtk -> merah + pulse (danger)
+  if(remaining<=5){
+   el.classList.add("danger");
+   bar.classList.add("danger");
+  }else if(remaining<=10){
+   el.classList.add("warn");
+   bar.classList.add("warn");
+  }
  });
  refreshAuthCodes();
 }
@@ -1049,7 +1120,15 @@ function renderAccounts(){
      <div class="auth-result-label">KODE OTP 6 DIGIT</div>
      <strong class="auth-code" data-auth-id="${esc(accountId)}">${hasSecret?"Memuat":"------"}</strong>
      <div class="auth-bottom">
-      <span class="auth-timer">Kode berganti dalam 30 dtk</span>
+      <div class="auth-timer-wrap">
+       <div class="auth-timer-row">
+        <i class="fa-solid fa-clock-rotate-left"></i>
+        <span class="auth-timer">Kode berganti dalam 30 dtk</span>
+       </div>
+       <div class="auth-progress">
+        <div class="auth-progress-bar" style="width:100%"></div>
+       </div>
+      </div>
       <button type="button" class="auth-copy-btn" data-action="copy-otp" data-index="${index}">
        <i class="fa-regular fa-copy"></i> SALIN OTP
       </button>
