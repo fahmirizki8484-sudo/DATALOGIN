@@ -294,6 +294,31 @@ main{
 .cred-value{
  color:#eaf6ff;font-family:monospace;font-size:13px;line-height:1.25;word-break:break-all
 }
+
+/* GRID 2x2 KREDENSIAL (USERNAME | PASSWORD / PIN | GMAIL) */
+.cred-grid{
+ display:grid;grid-template-columns:1fr 1fr;gap:6px;
+ margin:6px 11px 0;padding:0
+}
+.cred-cell{
+ padding:6px 8px;border:1px solid #0b4772;border-radius:8px;
+ background:rgba(0,22,48,.68);min-width:0;display:flex;flex-direction:column;gap:3px
+}
+.cred-cell-top{display:flex;justify-content:space-between;align-items:center;gap:4px}
+.cred-cell-label{
+ color:#4e779d;font-size:9px;font-weight:900;letter-spacing:.1em;white-space:nowrap
+}
+.cred-cell-buttons{display:flex;gap:3px;flex:none}
+.cred-cell-value{
+ color:#eaf6ff;font-family:monospace;font-size:11px;line-height:1.2;
+ word-break:break-all;overflow:hidden;text-overflow:ellipsis;
+ display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical
+}
+.cred-cell-value.empty{color:#436c8f;font-style:italic}
+.icon-btn.small{
+ width:22px;height:21px;font-size:10px;border-radius:6px
+}
+.icon-btn.small .fa-regular{font-size:10px}
 .icon-btn{
  width:27px;height:25px;display:grid;place-items:center;border:1px solid rgba(0,174,255,.28);
  border-radius:7px;background:linear-gradient(145deg,rgba(10,55,100,.85),rgba(3,25,52,.92));
@@ -588,6 +613,14 @@ main{
      <label>PASSWORD</label>
      <input id="passwordInput" required placeholder="Password">
     </div>
+    <div class="form-group" id="pinGroup" style="display:none">
+     <label>PIN (khusus XPAY)</label>
+     <input id="pinInput" placeholder="PIN XPAY">
+    </div>
+    <div class="form-group" id="gmailGroup" style="display:none">
+     <label>GMAIL (khusus XPAY)</label>
+     <input id="gmailInput" type="email" placeholder="Gmail XPAY">
+    </div>
     <div class="modal-actions">
      <button type="button" class="modal-btn" data-close="accountModal">BATAL</button>
      <button type="submit" class="modal-btn primary"><i class="fa-solid fa-floppy-disk"></i>&nbsp; SIMPAN AKUN</button>
@@ -654,7 +687,7 @@ const DEFAULT_DATA = [
   ["LC BOT AI", "ZIATOGEL@chatbot.com", "aCRm(OM@m(jHKc1f!RS*4y$K"],
   ["DASHBOARD SCATTER LAMA", "fahmirizki8484@gmail.com", "c71603a7"],
   ["ZONAMAIN", "fahmirizki8484@gmail.com", "shbahsvab567"],
-  ["QRIS XPAY", "vyoaafahmirizki", "asd123"],
+  ["QRIS XPAY", "vyoaafahmirizki", "asd123", "574117", "ziatogel@xpayapi.com"],
   ["QRIS P2MIH", "fahmirizki8484@gmail.com", "ZIa@Tog3LP4y2m1h"],
   ["QRIS KITATRUST", "cszia1kitatrust@gmail.com", "k46B*K#ebWa9"],
   ["QRIS MINERAPAY", "fahmirizki8484@gmail.com", "@Aa112233"],
@@ -718,6 +751,13 @@ let data = clone(DEFAULT_DATA);
 let links = clone(DEFAULT_LINKS);
 let searchTerm="";
 let passState={};
+
+/* Bersihkan data lama di localStorage supaya tidak mengganggu data default
+ * (mengatasi kasus browser punya data lama yang hanya berisi sebagian card/link) */
+try{
+ localStorage.removeItem("ziatogel_data");
+ localStorage.removeItem("ziatogel_links");
+}catch(e){}
 
 function makeAccountId(){
  if(globalThis.crypto?.randomUUID)return "acc-"+crypto.randomUUID();
@@ -878,13 +918,81 @@ function renderAccounts(){
  }
 
  $("cards").innerHTML=list.map(({item,index})=>{
-  const [name,user,pass]=item;
+  const [name,user,pass,pin,gmail]=item;
   const visible=!!passState[index];
   const accountId=accountIds[index];
   const hasSecret=!!authSecrets[accountId];
+  const isXpay=String(name).toLowerCase().includes("xpay");
   const orderOptions=data.map((_,i)=>`
    <option value="${i+1}" ${i===index?"selected":""}>Nomor ${i+1}</option>
   `).join("");
+
+  // Sel grid 2x2 khusus untuk XPAY (USERNAME | PASSWORD / PIN | GMAIL)
+  const xpayCell=(label,value,copyAction,extraBtn="")=>{
+   const empty=!value;
+   const displayValue=empty?"- KOSONG -":esc(value);
+   return`
+    <div class="cred-cell">
+     <div class="cred-cell-top">
+      <span class="cred-cell-label">${label}</span>
+      <div class="cred-cell-buttons">
+       ${extraBtn}
+       ${value?`<button class="icon-btn small" data-action="${copyAction}" data-index="${index}" title="Salin ${label.toLowerCase()}">
+        <i class="fa-regular fa-copy"></i>
+       </button>`:""}
+      </div>
+     </div>
+     <div class="cred-cell-value ${empty?"empty":""}">${displayValue}</div>
+    </div>`;
+  };
+
+  // Bagian kredensial: XPAY pakai grid 2x2 (4 field), card lain pakai layout asal (2 field)
+  const credentialBlock=isXpay?`
+   <div class="cred-grid">
+    ${xpayCell("USERNAME",user,"copy-user")}
+    <div class="cred-cell">
+     <div class="cred-cell-top">
+      <span class="cred-cell-label">PASSWORD</span>
+      <div class="cred-cell-buttons">
+       <button class="icon-btn small" data-action="toggle" data-index="${index}" title="Tampilkan/sembunyikan password">
+        <i class="fa-regular ${visible?"fa-eye-slash":"fa-eye"}"></i>
+       </button>
+       <button class="icon-btn small" data-action="copy-pass" data-index="${index}" title="Salin password">
+        <i class="fa-regular fa-copy"></i>
+       </button>
+      </div>
+     </div>
+     <div class="cred-cell-value">${visible?esc(pass):"••••••••"}</div>
+    </div>
+    ${xpayCell("PIN",pin,"copy-pin")}
+    ${xpayCell("GMAIL",gmail,"copy-gmail")}
+   </div>`:`
+   <div class="credential">
+    <div class="cred-top">
+     <span class="cred-label">USERNAME / EMAIL</span>
+     <div class="cred-buttons">
+      <button class="icon-btn" data-action="copy-user" data-index="${index}" title="Salin username">
+       <i class="fa-regular fa-copy"></i>
+      </button>
+     </div>
+    </div>
+    <div class="cred-value">${esc(user)}</div>
+   </div>
+
+   <div class="credential">
+    <div class="cred-top">
+     <span class="cred-label">PASSWORD</span>
+     <div class="cred-buttons">
+      <button class="icon-btn" data-action="toggle" data-index="${index}" title="Tampilkan/sembunyikan password">
+       <i class="fa-regular ${visible?"fa-eye-slash":"fa-eye"}"></i>
+      </button>
+      <button class="icon-btn" data-action="copy-pass" data-index="${index}" title="Salin password">
+       <i class="fa-regular fa-copy"></i>
+      </button>
+     </div>
+    </div>
+    <div class="cred-value">${visible?esc(pass):"••••••••••••"}</div>
+   </div>`;
 
   return`
   <article class="account">
@@ -912,32 +1020,7 @@ function renderAccounts(){
     <button type="button" data-action="move" data-index="${index}">PINDAH</button>
    </div>
 
-   <div class="credential">
-    <div class="cred-top">
-     <span class="cred-label">USERNAME / EMAIL</span>
-     <div class="cred-buttons">
-      <button class="icon-btn" data-action="copy-user" data-index="${index}" title="Salin username">
-       <i class="fa-regular fa-copy"></i>
-      </button>
-     </div>
-    </div>
-    <div class="cred-value">${esc(user)}</div>
-   </div>
-
-   <div class="credential">
-    <div class="cred-top">
-     <span class="cred-label">PASSWORD</span>
-     <div class="cred-buttons">
-      <button class="icon-btn" data-action="toggle" data-index="${index}" title="Tampilkan/sembunyikan password">
-       <i class="fa-regular ${visible?"fa-eye-slash":"fa-eye"}"></i>
-      </button>
-      <button class="icon-btn" data-action="copy-pass" data-index="${index}" title="Salin password">
-       <i class="fa-regular fa-copy"></i>
-      </button>
-     </div>
-    </div>
-    <div class="cred-value">${visible?esc(pass):"••••••••••••"}</div>
-   </div>
+   ${credentialBlock}
 
    <div class="auth-box">
     <div class="auth-heading">
@@ -1142,6 +1225,16 @@ if(action==="save-auth"){
 
  if(action==="copy-user")copyText(data[i][1],"Username berhasil disalin");
  if(action==="copy-pass")copyText(data[i][2],"Password berhasil disalin");
+ if(action==="copy-pin"){
+  const pin=data[i][3];
+  if(!pin){toast("PIN belum diisi",false);return;}
+  copyText(pin,"PIN berhasil disalin");
+ }
+ if(action==="copy-gmail"){
+  const gmail=data[i][4];
+  if(!gmail){toast("Gmail belum diisi",false);return;}
+  copyText(gmail,"Gmail berhasil disalin");
+ }
 
  if(action==="toggle"){
   passState[i]=!passState[i];
@@ -1174,12 +1267,22 @@ function deleteAccount(i){
 function openModal(id){$(id).classList.add("show")}
 function closeModal(id){$(id).classList.remove("show")}
 
+function toggleXpayFields(){
+ const name=($("platformInput").value||"").toLowerCase();
+ const show=name.includes("xpay");
+ $("pinGroup").style.display=show?"":"none";
+ $("gmailGroup").style.display=show?"":"none";
+}
+
 function addAccount(){
  $("accountModalTitle").textContent="TAMBAH AKUN BARU";
  $("editIndex").value="-1";
  $("platformInput").value="";
  $("usernameInput").value="";
  $("passwordInput").value="";
+ $("pinInput").value="";
+ $("gmailInput").value="";
+ toggleXpayFields();
  openModal("accountModal");
  setTimeout(()=>$("platformInput").focus(),100);
 }
@@ -1188,14 +1291,20 @@ function editAccount(i){
  const x=data[i];
  $("accountModalTitle").textContent="EDIT AKUN";
  $("editIndex").value=i;
- $("platformInput").value=x[0];
- $("usernameInput").value=x[1];
- $("passwordInput").value=x[2];
+ $("platformInput").value=x[0]||"";
+ $("usernameInput").value=x[1]||"";
+ $("passwordInput").value=x[2]||"";
+ $("pinInput").value=x[3]||"";
+ $("gmailInput").value=x[4]||"";
+ toggleXpayFields();
  openModal("accountModal");
  setTimeout(()=>$("platformInput").focus(),100);
 }
 
 $("addAccountBtn").onclick=addAccount;
+
+// Tampilkan otomatis field PIN/GMAIL ketika user mengetik nama platform XPAY
+$("platformInput").addEventListener("input",toggleXpayFields);
 
 $("accountForm").onsubmit=e=>{
  e.preventDefault();
@@ -1203,11 +1312,15 @@ $("accountForm").onsubmit=e=>{
  const item=[
   $("platformInput").value.trim(),
   $("usernameInput").value.trim(),
-  $("passwordInput").value
+  $("passwordInput").value,
+  $("pinInput").value.trim(),
+  $("gmailInput").value.trim()
  ];
 
- if(item.some(x=>!x)){
-  toast("Semua data wajib diisi",false);
+ // Hanya nama platform, username, dan password yang wajib diisi.
+ // PIN dan GMAIL hanya relevan untuk XPAY (opsional).
+ if(!item[0]||!item[1]||!item[2]){
+  toast("Nama platform, username, dan password wajib diisi",false);
   return;
  }
 
@@ -1317,10 +1430,15 @@ $("linkForm").onsubmit=e=>{
 
 /* HANDOVER */
 function find(...words){
- return data.find(x=>{
+ const found = data.find(x=>{
   const n=String(x[0]).toLowerCase();
   return words.some(w=>n.includes(w));
- })||["-","-","-"];
+ });
+ if(!found)return["-","-","-","",""];
+ // Pastikan panjang selalu 5
+ const f=[...found];
+ while(f.length<5)f.push("");
+ return f;
 }
 
 function updateHandover(){
@@ -1340,7 +1458,15 @@ function updateHandover(){
  const portal=find("portal chat");
  const wordpress=find("wordpress","wp");
 
- const row=(title,x)=>`${title}\nUsername : ${x[1]}\nPassword : ${x[2]}`;
+ const row=(title,x)=>{
+  const parts=[title,`Username : ${x[1]||"-"}`,`Password : ${x[2]||"-"}`];
+  // Hanya XPAY yang punya PIN dan Gmail
+  if(String(x[0]).toLowerCase().includes("xpay")){
+   if(x[3])parts.push(`PIN : ${x[3]}`);
+   if(x[4])parts.push(`Gmail : ${x[4]}`);
+  }
+  return parts.join("\n");
+ };
 
  $("handoverOutput").textContent=[
   "FORMAT SERAH TERIMA",
